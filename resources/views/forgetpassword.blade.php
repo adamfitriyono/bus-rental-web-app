@@ -8,13 +8,23 @@
     <body>
         <div class="container">
             <div class="row justify-content-center mt-5">
-                @if (session('message'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('message') }}
+                <div class="col-md-6">
+                    <!-- Back Button -->
+                    <div class="mb-3">
+                        <a href="{{ route('login') }}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-arrow-left me-2"></i>Kembali ke Login
+                        </a>
                     </div>
-                @endif
-                <a href="{{ route('home') }}" class="btn-link mb-3">kembali ke halaman utama</a>
-                <form action="{{ route('forgetpassword.sendlink') }}" method="POST">
+                    
+                    <h3 class="mb-4">Lupa Password</h3>
+                    
+                    @if (session('message'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('message') }}
+                        </div>
+                    @endif
+                    
+                    <form action="{{ route('forgetpassword.sendlink') }}" method="POST">
                     @csrf
                     <input type="text" class="form-control mb-3" name="email" placeholder="Masukkan email anda" required>
                     <button class="btn btn-success" type="submit">Kirim link reset password</button>

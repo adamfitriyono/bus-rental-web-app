@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'telepon',
+        'name', 'email', 'password', 'role', 'nomor_hp', 'status', 'email_verified', 'email_verified_at',
     ];
 
     /**
@@ -46,7 +46,11 @@ class User extends Authenticatable
         return $this->hasMany(Order::class, 'user_id', 'id');
     }
 
-    public function payment() {
-        return $this->hasMany(Payment::class,'user_id','id');
+    public function pemesanans() {
+        return $this->hasMany(Pemesanan::class, 'id_user', 'id');
+    }
+
+    public function notifikasis() {
+        return $this->hasMany(Notifikasi::class, 'id_user', 'id');
     }
 }

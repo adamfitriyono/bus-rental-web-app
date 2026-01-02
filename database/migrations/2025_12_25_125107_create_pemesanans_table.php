@@ -20,6 +20,7 @@ class CreatePemesanansTable extends Migration
             $table->unsignedBigInteger('id_bus');
             $table->string('nomor_kursi', 100); // Bisa multiple kursi dipisah koma
             $table->integer('jumlah_kursi');
+            $table->decimal('total_harga', 12, 2)->default(0);
             $table->string('status_pemesanan', 20)->default('pending');
             $table->timestamp('tanggal_pemesanan')->useCurrent();
             $table->timestamps();

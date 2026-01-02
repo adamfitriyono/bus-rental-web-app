@@ -28,26 +28,27 @@ class UserController extends Controller
     }
 
     public function edit() {
-        return view('account',[
-            'user' => User::find(Auth::id())
-        ]);
+        $user = User::find(Auth::id());
+        if (!$user) {
+            return redirect()->route('dashboard.index')->with('error', 'User tidak ditemukan');
+        }
+        return view('account', ['user' => $user]);
     }
 
     public function update(Request $request) {
         $user = User::find(Auth::id());
 
-        $this->validate($request,[
-            'name' => 'required|max:255',
-            'email' => 'required|email',
-            'telepon' => 'required|max:15'
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'nomor_hp' => 'nullable|string|max:15'
+        ], [
+            'email.unique' => 'Email sudah terdaftar oleh user lain'
         ]);
 
-        $user->name = $request['name'];
-        $user->email = $request['email'];
-        $user->telepon = $request['telepon'];
-        $user->save();
+        $user->update($validated);
 
-        return back()->with('updated', 'Berhasil melakukan perubahan');
+        return back()->with('updated', 'Profil berhasil diperbarui');
     }
 
     public function changePassword(Request $request) {

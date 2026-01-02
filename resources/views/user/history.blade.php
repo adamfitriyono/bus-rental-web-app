@@ -86,7 +86,7 @@
                             <i class="fas fa-user-circle me-1"></i>{{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{{ route('account') }}">Profil Saya</a></li>
+                            <li><a class="dropdown-item" href="{{ route('akun.pengaturan') }}">Profil Saya</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
@@ -155,7 +155,7 @@
 
         <!-- Booking List -->
         <div class="row">
-            @forelse($bookings as $booking)
+            @forelse($pemesanans as $booking)
             <div class="col-12 mb-3">
                 <div class="booking-card card border-0 shadow-sm">
                     <div class="card-body">
@@ -260,9 +260,9 @@
         </div>
 
         <!-- Pagination -->
-        @if($bookings->hasPages())
+        @if($pemesanans->hasPages())
         <div class="d-flex justify-content-center mt-4">
-            {{ $bookings->links() }}
+            {{ $pemesanans->links() }}
         </div>
         @endif
     </div>

@@ -397,7 +397,7 @@ Q-012: SELECT * FROM pemesanan ORDER BY tanggal_pemesanan DESC
 Q-013: UPDATE pemesanan SET status_pemesanan=? WHERE id_pemesanan=?
 
 Q-014: SELECT COUNT(*) as total_penjualan, 
-              SUM(total) as pendapatan 
+              SUM(total) as pendapatan               git remote set-url origin https://github.com/adamfitriyono/bus-rental-web-app.git              git push -u origin main
        FROM pembayaran 
        WHERE status_pembayaran='Lunas' AND DATE(tanggal) BETWEEN ? AND ?
 

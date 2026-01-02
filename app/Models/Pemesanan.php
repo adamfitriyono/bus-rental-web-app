@@ -18,7 +18,9 @@ class Pemesanan extends Model
         'id_bus',
         'nomor_kursi',
         'jumlah_kursi',
-        'status_pemesanan'
+        'total_harga',
+        'status_pemesanan',
+        'tanggal_pemesanan'
     ];
 
     protected $casts = [

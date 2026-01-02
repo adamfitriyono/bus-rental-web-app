@@ -30,12 +30,39 @@ class DashboardController extends Controller
                                     $query->whereDate('tanggal', '<', Carbon::today());
                                 })
                                 ->count();
+        $pendingBookings = Pemesanan::where('id_user', $user->id)
+            ->where('status_pemesanan', 'menunggu_pembayaran')
+            ->count();
+        $confirmedBookings = Pemesanan::where('id_user', $user->id)
+            ->where('status_pemesanan', 'dikonfirmasi')
+            ->count();
+        $upcomingTrips = $tiketMendatang;
+        $upcomingBookings = Pemesanan::with(['jadwal.rute', 'bus', 'penumpangs', 'pembayaran'])
+            ->where('id_user', $user->id)
+            ->whereHas('jadwal', function($query) {
+                $query->whereDate('tanggal', '>=', Carbon::today());
+            })
+            ->where('status_pemesanan', '!=', 'dibatalkan')
+            ->orderBy('tanggal_pemesanan', 'ASC')
+            ->get();
+
+        // Recent activities
+        $recentActivities = Pemesanan::with(['jadwal.rute', 'bus', 'pembayaran'])
+            ->where('id_user', $user->id)
+            ->orderBy('tanggal_pemesanan', 'DESC')
+            ->limit(5)
+            ->get();
 
         return view('user.dashboard', [
             'user' => $user,
             'totalTiket' => $totalTiket,
             'tiketMendatang' => $tiketMendatang,
-            'tiketLampau' => $tiketLampau
+            'tiketLampau' => $tiketLampau,
+            'pendingBookings' => $pendingBookings,
+            'confirmedBookings' => $confirmedBookings,
+            'upcomingTrips' => $upcomingTrips,
+            'upcomingBookings' => $upcomingBookings,
+            'recentActivities' => $recentActivities
         ]);
     }
 
@@ -46,7 +73,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         
-        $query = Pemesanan::with(['jadwal.rute', 'bus', 'pembayaran'])
+        $query = Pemesanan::with(['jadwal.rute', 'bus', 'penumpangs', 'pembayaran'])
                          ->where('id_user', $user->id);
 
         // Filter by status

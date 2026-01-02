@@ -110,6 +110,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/history', [DashboardController::class, 'history'])->name('dashboard.history');
     Route::get('/user/history', [DashboardController::class, 'history'])->name('user.history');
     Route::get('/ticket-detail/{id}', [DashboardController::class, 'ticketDetail'])->name('ticket.detail');
+    Route::get('/user/ticket-detail/{id}', [DashboardController::class, 'ticketDetail'])->name('user.ticket.detail');
     Route::post('/cancel-booking/{id}', [DashboardController::class, 'cancelBooking'])->name('booking.cancel');
 
     // Booking
@@ -122,6 +123,7 @@ Route::middleware('auth')->group(function() {
     // Payment
     Route::get('/payment-summary', [PaymentController::class, 'showPaymentSummary'])->name('payment.summary');
     Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('payment.process');
+    Route::get('/payment-success/{id}', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
     Route::get('/payment-upload/{id}', [PaymentController::class, 'uploadBuktiTransfer'])->name('payment.upload');
     Route::post('/upload-bukti/{id}', [PaymentController::class, 'uploadBuktiTransfer'])->name('payment.upload.bukti');
     Route::get('/payment-gateway/{id}', [PaymentController::class, 'paymentGateway'])->name('payment.gateway');

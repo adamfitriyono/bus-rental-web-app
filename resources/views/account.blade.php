@@ -18,10 +18,16 @@
         </nav>
         <div class="container mt-4 px-3">
             @if (session('updated'))
-                <div class="alert alert-success">{{ session('updated') }}</div>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('updated') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
             @endif
             @if (session('message'))
-                <div class="alert alert-danger">{{ session('message') }}</div>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('message') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
             @endif
             <div class="row justify-content-center text-center mb-4">
                 <h5>Pengaturan Akun</h5>
@@ -32,16 +38,25 @@
                         @method('PATCH')
                         @csrf
                         <div class="form-floating mb-1">
-                            <input type="text" name="name" class="form-control" id="floatingName" value="{{ $user->name }}" required>
+                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="floatingName" value="{{ old('name', $user->name) }}" required>
                             <label for="floatingName">Nama Lengkap</label>
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-floating mb-1">
-                            <input type="email" name="email" class="form-control" id="floatingInput" value="{{ $user->email }}" required>
+                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="floatingInput" value="{{ old('email', $user->email) }}" required>
                             <label for="floatingInput">Email</label>
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-floating">
-                            <input type="text" name="telepon" class="form-control" id="floatingtelp" value="{{ $user->telepon }}" required>
+                            <input type="text" name="nomor_hp" class="form-control @error('nomor_hp') is-invalid @enderror" id="floatingtelp" value="{{ old('nomor_hp', $user->nomor_hp ?? '') }}">
                             <label for="floatingtelp">No Telepon</label>
+                            @error('nomor_hp')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <button type="submit" class="btn btn-success w-100 mt-4">Simpan</button>
                     </form>
@@ -50,19 +65,25 @@
                         @method('PATCH')
                         @csrf
                         <div class="form-floating mb-1">
-                            <input type="password" name="oldPassword" class="form-control" id="floatingOld" required>
+                            <input type="password" name="oldPassword" class="form-control @error('oldPassword') is-invalid @enderror" id="floatingOld" required>
                             <label for="floatingOld">Password Saat Ini</label>
+                            @error('oldPassword')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-floating mb-1">
-                            <input type="password" name="newPassword" class="form-control" id="floatingNew" required>
+                            <input type="password" name="newPassword" class="form-control @error('newPassword') is-invalid @enderror" id="floatingNew" required>
                             <label for="floatingNew">Password Baru</label>
+                            @error('newPassword')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <button type="submit" class="btn btn-success w-100 mt-4">Ganti Password</button>
                     </form>
                     @if (Auth::user()->role != 0)
                     <a class="btn btn-danger w-100 mt-2" href="{{ route('admin.index') }}">Kembali</a>
                     @else
-                    <a class="btn btn-danger w-100 mt-2" href="{{ route('member.index') }}">Kembali</a>
+                    <a class="btn btn-danger w-100 mt-2" href="{{ route('dashboard.index') }}">Kembali</a>
                     @endif
                 </div>
             </div>

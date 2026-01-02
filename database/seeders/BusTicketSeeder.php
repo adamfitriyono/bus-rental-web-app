@@ -89,6 +89,26 @@ class BusTicketSeeder extends Seeder
             ]
         );
 
+        $rute5 = Rute::firstOrCreate(
+            ['kota_asal' => 'Surabaya', 'kota_tujuan' => 'Jakarta'],
+            [
+                'jarak_km' => 780,
+                'estimasi_jam' => 12,
+                'harga_base' => 180000,
+                'status' => 'aktif'
+            ]
+        );
+
+        $rute6 = Rute::firstOrCreate(
+            ['kota_asal' => 'Jakarta', 'kota_tujuan' => 'Surabaya'],
+            [
+                'jarak_km' => 780,
+                'estimasi_jam' => 12,
+                'harga_base' => 180000,
+                'status' => 'aktif'
+            ]
+        );
+
         // Create Sample Buses
         $bus1 = Bus::firstOrCreate(
             ['plat_nomor' => 'H-1234-AB'],
@@ -130,7 +150,7 @@ class BusTicketSeeder extends Seeder
         );
 
         // Create Sample Schedules for next 7 days
-        $rutes = [$rute1, $rute2, $rute3, $rute4];
+        $rutes = [$rute1, $rute2, $rute3, $rute4, $rute5, $rute6];
         $buses = [$bus1, $bus2, $bus3];
         
         for ($day = 0; $day < 7; $day++) {
